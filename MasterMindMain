@@ -1,0 +1,89 @@
+
+import random
+
+
+def Listing(number):
+
+   number = int(number)
+   num0 = int(number/1000) #extracting each digit from the int into a list
+   num1 = int((number - (1000*num0))/100)
+   num2 = int((number - ((1000*num0) + (100*num1)))/10)
+   num3 = int(number - ((1000*num0) + (100*num1) + (10*num2)))
+
+   numberList = [num0,num1,num2,num3]
+
+   return numberList
+
+
+
+
+def Solving(InputList, RandomList):
+
+   CompareRand = [0,0,0,0]
+   CompareInput = [0,0,0,0]
+
+   a = 0
+   b = 0
+   c = 0
+   X = 0
+   O = 0
+
+   while c < 4:
+       if RandomList[c] == InputList[c]:
+           O = O + 1
+           CompareInput[c] = 1
+           CompareRand[c] = 1
+       c = c + 1
+
+   while a < 4:
+       while b < 4:
+           if RandomList[a] == InputList[b] and RandomList[a] != InputList[a] and CompareInput[b] == 0 and CompareRand[a] == 0:
+               CompareInput[b] = 1
+               X = X + 1
+               break
+           b = b + 1
+       b = 0
+       a = a + 1
+
+       ReturnList = [O,X]
+
+   return ReturnList
+
+
+
+
+print("\n*********MASTERMIND*********\n")
+
+RandomList = [random.randint(1,6), random.randint(1,6), random.randint(1,6), random.randint(1,6)]
+
+for x in range(4):
+   print(RandomList[x])
+
+x = 0
+
+Counter = 1
+
+ReturnList = [0,0,0,0]
+
+while ReturnList[0] != 4:
+
+   InputNumber = input("Pick 4 numbers from 1 to 6 : ")
+
+   InputList = Listing(InputNumber)
+
+   ReturnList = Solving(InputList, RandomList)
+
+   for x in range(ReturnList[0]):
+       print("o")
+   for x in range(ReturnList[1]):
+       print("x")
+
+   if ReturnList[0] == 4:
+       break
+   else:
+       print("\nTry again!")
+
+   Counter = Counter + 1
+
+print ("Good job! You have guessed the numbers in", Counter, "tries!")
+
